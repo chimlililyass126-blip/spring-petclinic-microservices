@@ -1,0 +1,19 @@
+name: Scan Securite OWASP
+
+on: [push]
+
+jobs:
+  owasp-scan:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout du code
+        uses: actions/checkout@v4
+
+      - name: Run OWASP Dependency-Check
+        uses: dependency-check/Dependency-Check_Action@main
+        with:
+          project: 'PetClinic-Microservices'
+          path: '.'
+          format: 'HTML'
+          args: >
+            --failOnCVSS 7
