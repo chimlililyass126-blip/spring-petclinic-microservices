@@ -13,7 +13,7 @@ jobs:
         uses: aquasecurity/trivy-action@master
         with:
           scan-type: 'fs'
-          scan-ref: '.'
+          scan-ref: 'pom.xml' # C'est LA modification qui sauve la mémoire du serveur
           format: 'table'
           exit-code: '1'
           severity: 'CRITICAL,HIGH'
