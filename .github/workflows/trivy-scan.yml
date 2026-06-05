@@ -9,11 +9,22 @@ jobs:
       - name: Recuperer le code
         uses: actions/checkout@v4
 
+      # On installe Java sur la machine Github pour qu'elle puisse lire le projet
+      - name: Preparer Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      # On télécharge les dépendances proprement avant que Trivy n'arrive
+      - name: Pre-telecharger le cache Maven
+        run: mvn dependency:resolve
+
       - name: Scan Trivy
         uses: aquasecurity/trivy-action@master
         with:
           scan-type: 'fs'
-          scan-ref: 'pom.xml' # C'est LA modification qui sauve la mémoire du serveur
+          scan-ref: 'pom.xml'
           format: 'table'
           exit-code: '1'
           severity: 'CRITICAL,HIGH'
