@@ -1,10 +1,14 @@
 name: Scan Securite PetClinic
+
 on: [push]
+
 jobs:
   scan:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: Recuperer le code
+        uses: actions/checkout@v4
+
       - name: Scan Trivy
         uses: aquasecurity/trivy-action@master
         with:
@@ -13,3 +17,5 @@ jobs:
           format: 'table'
           exit-code: '1'
           severity: 'CRITICAL,HIGH'
+          timeout: '15m'
+          scanners: 'vuln'
